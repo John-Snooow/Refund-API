@@ -1,0 +1,29 @@
+{
+  "name": "refund-api",
+  "version": "1.0.0",
+  "description": "Do mesmo projeto Que havíamos feito antes A parte de HTML e CSS, agora Vamos criar a API dele",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/John-Snooow/Refund-API.git"
+  },
+  "author": "John Frank",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/John-Snooow/Refund-API/issues"
+  },
+  "homepage": "https://github.com/John-Snooow/Refund-API#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
