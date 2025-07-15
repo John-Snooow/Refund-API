@@ -1,8 +1,8 @@
 import { AppError } from "@/utils/AppError";
-import { ErrorRequestHandler, request } from "express";
+import { ErrorRequestHandler } from "express";
 import { ZodError } from "zod";
 
-export const errorHandler: ErrorRequestHandler = (
+export const errorHandling: ErrorRequestHandler = (
     error,
     request,
     response,
