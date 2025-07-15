@@ -12,7 +12,7 @@ enum UserRole {
   manager
 }
 
-enum Category{
+enum Category {
   food
   others
   services
@@ -39,7 +39,7 @@ model User{
 model Refunds{
   id String @id @default(uuid())
   name String
-  amount Decimal
+  amount Float
   Category Category
   filename String
 
