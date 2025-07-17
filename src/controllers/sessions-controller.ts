@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { prisma } from "../database/prisma";
 import { AppError } from "../utils/AppError";
+import { authConfig } from "@/configs/auth";  
+import { sign } from "jsonwebtoken";
 import { compare } from "bcrypt";
 import { z } from "zod";
 
@@ -32,7 +34,16 @@ class SessionsController {
       throw new AppError("Usuário ou senha inválidos", 401);
     }
 
-    response.json({ email, password });
+    const { secret, expiresIn } = authConfig.jwt;
+
+    const token = sign({ role: user.role }, secret, {
+      subject: user.id,
+      expiresIn,
+    });
+
+    const { password: _, ...userWithoutPassword } = user;
+
+    response.json({ token, user: userWithoutPassword });
   }
 }
 
