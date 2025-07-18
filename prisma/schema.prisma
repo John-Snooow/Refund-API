@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -20,12 +21,12 @@ enum Category {
   accommodation
 }
 
-model User{
+model User {
   id String @id @default(uuid())
   name String
   email String @unique
-  password String
-  
+  password String 
+    
   role UserRole @default(employee)
 
   refunds Refunds[]
@@ -36,11 +37,11 @@ model User{
   @@map("users")
 }
 
-model Refunds{
+model Refunds {
   id String @id @default(uuid())
   name String
-  amount Float
-  Category Category
+  amount Float @map("amount")
+  category Category
   filename String
 
   userId String @map("user_id")
@@ -50,6 +51,4 @@ model Refunds{
   updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@map("refunds")
-  
 }
-

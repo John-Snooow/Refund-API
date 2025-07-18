@@ -1,50 +1,45 @@
-import { Request, Response } from "express";
-import { prisma } from "../database/prisma";
-import { AppError } from "../utils/AppError";
-import { authConfig } from "@/configs/auth";  
-import { sign } from "jsonwebtoken";
-import { compare } from "bcrypt";
-import { z } from "zod";
+import { Request, Response } from "express"
+import { AppError } from "@/utils/AppError"
+import { authConfig } from "@/configs/auth"
+import { prisma } from "@/database/prisma"
+import { sign } from "jsonwebtoken"
+import { compare } from "bcrypt"
+import { z } from "zod"
 
 class SessionsController {
   async create(request: Request, response: Response) {
     const bodySchema = z.object({
-      email: z
-        .string()
-        .email({ message: "O email é invalido" }),
-      password: z
-        .string()
-    });
+      email: z.string().email({ message: "E-mail inválido" }),
+      password: z.string(),
+    })
 
-    const { email, password } = bodySchema.parse(request.body);
+    const { email, password } = bodySchema.parse(request.body)
 
     const user = await prisma.user.findFirst({
-      where: {
-        email,
-      },
-    });
+      where: { email },
+    })
 
-    if(!user) {
-      throw new AppError("Usuário ou senha inválidos", 401);
+    if (!user) {
+      throw new AppError("E-mail ou senha inválido", 401)
     }
 
-    const passwordMatch = await compare(password, user.password);
+    const passwordMatched = await compare(password, user.password)
 
-    if(!passwordMatch) {
-      throw new AppError("Usuário ou senha inválidos", 401);
+    if (!passwordMatched) {
+      throw new AppError("E-mail ou senha inválido", 401)
     }
 
-    const { secret, expiresIn } = authConfig.jwt;
+    const { secret, expiresIn } = authConfig.jwt
 
     const token = sign({ role: user.role }, secret, {
       subject: user.id,
       expiresIn,
-    });
+    })
 
-    const { password: _, ...userWithoutPassword } = user;
+    const { password: _, ...userWithoutPassword } = user
 
-    response.json({ token, user: userWithoutPassword });
+    response.json({ token, user: userWithoutPassword })
   }
 }
 
-export { SessionsController };
+export { SessionsController }
